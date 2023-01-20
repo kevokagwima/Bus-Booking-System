@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/buses.css') }}">
+{% endblock %}
+
+{% block title %}
+Available Buses
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {% for bus in buses %}
+  <div class="bus">
+    <h4>#{{ bus.reg_no }}</h4>
+    <p>From: {{ bus.route_from }}</p>
+    <p>To: {{ bus.route_to }}</p>
+    <p>Seats: {{ bus.seats }}</p>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

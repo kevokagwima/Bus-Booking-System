@@ -1,0 +1,11 @@
+.container {
+  padding: 2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.bus {
+  padding: 1rem;
+  outline: 2px solid black;
+  min-width: 15vw;
+}

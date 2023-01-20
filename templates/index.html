@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  {{ date }}
+  <div class="route-box">
+    <form action="{{ url_for('available_bus') }}" method="post">
+      <input type="text" name="from" placeholder="From" required>
+      <input type="text" name="to" placeholder="To" required>
+      <button type="submit">Search</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% block head %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+  <title>Bus Booking | {% block title %} {% endblock %}</title>
+</head>
+{% endblock %}
+
+<body>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="tops">
+    {% for category, message in messages %}
+    <div class="alert alert-{{category}}">
+      <p>{{ message }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% endwith %}
+  <header>
+    <a href="{{ url_for('index') }}">
+      <h1 id="logo">EBS</h1>
+    </a>
+    <div class="links">
+      {% if current_user.is_authenticated %}
+      <p>Welcome, <b>{{ current_user.fname }} {{ current_user.lname }}</b></p>
+      {% else %}
+      <a href="{{ url_for('signup') }}">Customer Registration</a>
+      <a href="{{ url_for('signin') }}">Customer Login</a>
+      <a href="#">#</a>
+      {% endif %}
+    </div>
+  </header>
+
+  {% block body %}
+  {% endblock %}
+</body>
+
+</html>
