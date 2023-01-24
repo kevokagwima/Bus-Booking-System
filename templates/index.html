@@ -11,7 +11,6 @@ Home
 
 {% block body %}
 <div class="container">
-  {{ date }}
   <div class="route-box">
     <form action="{{ url_for('available_bus') }}" method="post">
       <input type="text" name="from" placeholder="From" required>

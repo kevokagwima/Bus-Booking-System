@@ -30,11 +30,20 @@
     </a>
     <div class="links">
       {% if current_user.is_authenticated %}
-      <p>Welcome, <b>{{ current_user.fname }} {{ current_user.lname }}</b></p>
+      <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+      <p>Welcome,
+        <b>
+          {% if current_user.username %}
+          {{ current_user.username }}
+          {% else %}
+          {{ current_user.fname }} {{ current_user.lname }}
+          {% endif %}
+        </b>
+      </p>
       {% else %}
       <a href="{{ url_for('signup') }}">Customer Registration</a>
       <a href="{{ url_for('signin') }}">Customer Login</a>
-      <a href="#">#</a>
+      <a href="{{ url_for('fleetmanager_signin') }}">Fleet Manager Login</a>
       {% endif %}
     </div>
   </header>

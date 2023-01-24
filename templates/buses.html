@@ -11,13 +11,18 @@ Available Buses
 
 {% block body %}
 <div class="container">
-  {% for bus in buses %}
-  <div class="bus">
-    <h4>#{{ bus.reg_no }}</h4>
-    <p>From: {{ bus.route_from }}</p>
-    <p>To: {{ bus.route_to }}</p>
-    <p>Seats: {{ bus.seats }}</p>
-  </div>
+  {% for busz in available_buses %}
+  {% for bus in buses if bus.id == busz %}
+  {% for route in routes if route.bus == bus.id %}
+  <a href="{{ url_for('select_bus', bus_id=bus.id) }}">
+    <div class="bus">
+      <p>From: <b>{{ route.route_from }}</b> - to: <b>{{ route.route_to }}</b></p>
+      <p>Bus: <b>#{{ bus.reg_no }}</b></p>
+      <p>Bus ID: <b>{{ bus.bus_identifier }}</b></p>
+    </div>
+  </a>
+  {% endfor %}
+  {% endfor %}
   {% endfor %}
 </div>
 {% endblock %}

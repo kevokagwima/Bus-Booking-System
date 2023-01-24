@@ -1,11 +1,22 @@
 .container {
+  margin-top: 4rem;
   padding: 2rem;
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
 }
 
 .bus {
   padding: 1rem;
-  outline: 2px solid black;
-  min-width: 15vw;
+  outline: 1px solid black;
+  min-width: 10rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+a {
+  text-decoration: none;
+  color: #212121;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }

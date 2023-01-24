@@ -1,1 +1,1 @@
-drop table routes
+delete from bus where id=19

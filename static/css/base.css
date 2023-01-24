@@ -4,12 +4,20 @@
   padding: 0;
 }
 
+body {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
 header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: whitesmoke;
   padding: 1rem 2rem;
+  position: fixed;
+  top: 0;
+  z-index: 10;
+  min-width: 100vw;
 }
 
 .links {
@@ -20,7 +28,7 @@ header {
 
 .tops {
   position: fixed;
-  top: 4.5rem;
+  top: 4.3rem;
   z-index: 10;
   min-width: 100vw;
   animation: fade-away 1s 6s forwards;
