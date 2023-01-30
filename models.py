@@ -34,7 +34,7 @@ class Bus(db.Model):
   bus_identifier = db.Column(db.String(1), nullable=False, unique=True)
   seats = db.Column(db.Integer(), nullable=False)
   driver = db.Column(db.Integer(), db.ForeignKey("drivers.id"))
-  route = db.relationship("Routes", backref="bus-route", lazy=True)
+  route = db.Column(db.Integer(), db.ForeignKey("routes.id"))
   booking = db.relationship("Booking", backref="booking-bus", lazy=True)
 
 class Routes(db.Model):
@@ -44,7 +44,7 @@ class Routes(db.Model):
   route_to = db.Column(db.String(20), nullable=False)
   depature_time = db.Column(db.Time(), nullable=False)
   price = db.Column(db.Integer(), nullable=False)
-  bus = db.Column(db.Integer(), db.ForeignKey("bus.id"))
+  bus = db.relationship("Bus", backref="bus-route", lazy=True)
   booking = db.relationship("Booking", backref="booking-route", lazy=True)
 
 class Booking(db.Model):
@@ -53,4 +53,4 @@ class Booking(db.Model):
   customer = db.Column(db.Integer(), db.ForeignKey("customers.id"))
   bus = db.Column(db.Integer(), db.ForeignKey("bus.id"))
   route = db.Column(db.Integer(), db.ForeignKey("routes.id"))
-  seat = db.Column(db.Integer(), unique=True, nullable=False)
+  seat = db.Column(db.Integer(), nullable=False)

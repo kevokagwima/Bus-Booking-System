@@ -1,0 +1,16 @@
+.container {
+  margin-top: 4rem;
+  padding: 2rem;
+}
+
+.booking-box {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.bookings {
+  padding: 1rem;
+  outline: 1px solid black;
+}

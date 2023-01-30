@@ -1,0 +1,121 @@
+.container {
+  margin-top: 4rem;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+#tab {
+  outline: 1px solid red;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  height: max-content;
+}
+
+#tab > h1 {
+  font-size: 2.5ch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn {
+  background-color: tomato;
+  border: none;
+  padding: 0.6em 1em;
+  cursor: pointer;
+  color: white;
+}
+
+#tab hr {
+  border: none;
+  outline: 1px solid grey;
+  margin: 0.4rem 0 1rem;
+}
+
+.bus-box,
+.routes-box,
+.driver-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 30rem;
+  overflow: auto;
+  padding-right: 0.3rem;
+}
+
+.bus-info,
+.routes-info,
+.driver-info {
+  background-color: whitesmoke;
+  padding: 1rem;
+}
+
+.bus-info p,
+.routes-info p,
+.driver-info p {
+  padding: 0.2rem 0;
+}
+
+.modal,
+.modal2,
+.modal3 {
+  display: none;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 10% auto;
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 80%;
+  position: relative;
+}
+
+form {
+  display: grid;
+  grid-template-columns: auto;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+form input,
+form select {
+  padding: 1em;
+  cursor: pointer;
+}
+
+form button {
+  background-color: green;
+  color: white;
+  padding: 1em;
+  cursor: pointer;
+}
+
+.close,
+.close2,
+.close3 {
+  color: red;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 0.5rem;
+  right: 1.5rem;
+  cursor: pointer;
+}
+
+#red {
+  color: red;
+  font-size: 1.4ch;
+}

@@ -1,1 +1,1 @@
-delete from bus where id=19
+drop table bookings

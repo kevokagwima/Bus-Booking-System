@@ -1,0 +1,112 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/fleet-home.css') }}">
+{% endblock %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <div id="tab" class="bus">
+    <h1>
+      Buses ({{ buses|count }})
+      <button id="myBtn" class="btn">Add Bus</button>
+    </h1>
+    <hr>
+    <div class="bus-box">
+      {% for bus in buses|sort(attribute="id", reverse=True) %}
+      <div class="bus-info">
+        <h4>#{{ bus.reg_no }}</h4>
+        <hr>
+        <p>Bus: {{ bus.bus_identifier }}</p>
+        <p>{{ bus.seats }} seats</p>
+        {% if bus.driver %}
+        {% for driver in drivers if driver.id == bus.driver %}
+        <p>Driver: {{ driver.username }}</p>
+        {% endfor %}
+        {% else %}
+        <span id="red">No Driver Assigned</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div id="tab" class="route">
+    <h1>
+      Routes ({{ routes|count }})
+      <button id="myBtn2" class="btn">Add Route</button>
+    </h1>
+    <hr>
+    <div class="routes-box">
+      {% for route in routes|sort(attribute="id", reverse=True) %}
+      <div class="routes-info">
+        <h4>{{ route.route_from }} - {{ route.route_to }}</h4>
+        <hr>
+        <p>Price: {{ "Ksh {:,}".format(route.price) }}</p>
+        <p>Leaves at: {{ route.depature_time.strftime("%I:%M %p") }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div id="tab" class="driver">
+    <h1>
+      Drivers ({{ drivers|count }})
+      <button id="myBtn3" class="btn">Add Driver</button>
+    </h1>
+    <hr>
+    <div class="driver-box">
+      {% for driver in drivers|sort(attribute="id", reverse=True) %}
+      <div class="driver-info">
+        <p>{{ driver.username }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <form action="{{ url_for('add_bus') }}" method="post">
+      <input type="text" name="identifier" id="" placeholder="Bus Identifier" required>
+      <input type="number" name="seats" placeholder="Seats" id="" required>
+      <select name="driver" id="">
+        {% for driver in drivers %}
+        <option value="{{ driver.id }}">{{ driver.username }}</option>
+        {% endfor %}
+      </select>
+      <select name="route" id="">
+        {% for route in routes|sort(attribute="id", reverse=True) %}
+        <option value="{{ route.id }}">{{ route.route_from }} - {{ route.route_to }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Add &plus;</button>
+    </form>
+  </div>
+</div>
+<div id="myModal2" class="modal">
+  <div class="modal-content">
+    <span class="close2">&times;</span>
+    <form action="{{ url_for('add_route') }}" method="post">
+      <input type="text" name="from" id="" placeholder="From" required>
+      <input type="text" name="to" placeholder="To" id="" required>
+      <input type="number" name="price" placeholder="Price" id="" required>
+      <button type="submit">Add &plus;</button>
+    </form>
+  </div>
+</div>
+<div id="myModal3" class="modal">
+  <div class="modal-content">
+    <span class="close3">&times;</span>
+    <form action="{{ url_for('add_driver') }}" method="post">
+      <input type="text" name="username" id="" placeholder="Username" required>
+      <button type="submit">Add &plus;</button>
+    </form>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='Js/fleet-manager.js') }}"></script>
+{% endblock %}

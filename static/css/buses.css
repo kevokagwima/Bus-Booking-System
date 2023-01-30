@@ -1,22 +1,32 @@
 .container {
   margin-top: 4rem;
   padding: 2rem;
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
   gap: 1rem;
+  background-color: whitesmoke;
+  min-height: 91.8vh;
+}
+
+a {
+  height: max-content;
 }
 
 .bus {
   padding: 1rem;
-  outline: 1px solid black;
+  background-color: var(--highlight-bgcolor);
+  border-radius: 0.3rem;
+  outline: 2px solid white;
   min-width: 10rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
 }
 
-a {
-  text-decoration: none;
-  color: #212121;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+.bus p {
+  color: white;
+}
+
+.bus span {
+  color: whitesmoke;
 }

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{{ super() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bookings.css') }}">
+{% endblock %}
+
+{% block title %}
+My Bookings
+{% endblock %}
+
+{% block body %}
+<div class="container">
+  <h2>My bookings ({{ bookings|count }})</h2>
+  <div class="booking-box">
+    {% for booking in bookings|sort(attribute="id", reverse=True) %}
+    <div class="bookings">
+      {% for bus in buses if bus.id == booking.bus %}
+      <h4>Bus RegNo: #{{ bus.reg_no }}</h4>
+      <h4>Seat: {{ bus.bus_identifier }}-{{ booking.seat }}
+        {% endfor %}
+      </h4>
+      {% for route in routes if booking.route == route.id %}
+      <p>From: {{ route.route_from }} - To: {{ route.route_to }}</p>
+      <p>Total Amount: {{ "Ksh {:,}".format(route.price) }}</p>
+      <span>Departing At: {{ route.depature_time.strftime("%I:%M %p") }}</span>
+      {% endfor %}
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

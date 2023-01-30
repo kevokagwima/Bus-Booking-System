@@ -1,7 +1,7 @@
 from flask import Flask, render_template, flash, url_for, redirect, request
 from flask_login import login_manager, LoginManager, login_user, logout_user, login_required, current_user
 from models import *
-import random
+import random, stripe, os
 from datetime import time
 
 app = Flask(__name__)
@@ -9,6 +9,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///site.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = True
 app.config["SQLALCHEMY_SILENCE_UBER_WARNING"] = 1
 app.config["SECRET_KEY"] = 'judyonlinebookingproject'
+stripe.api_key = os.environ['Stripe_api_key']
 
 login_manager = LoginManager()
 login_manager.login_view = "/customer-login"
@@ -105,7 +106,8 @@ def add_bus():
       reg_no = random.randint(100000,999999),
       bus_identifier = request.form.get("identifier").capitalize(),
       seats = request.form.get("seats"),
-      driver = request.form.get("driver")
+      driver = request.form.get("driver"),
+      route = request.form.get("route")
     )
     db.session.add(new_bus)
     db.session.commit()
@@ -119,8 +121,7 @@ def add_route():
     route_from = request.form.get("from").capitalize(),
     route_to = request.form.get("to").capitalize(),
     price = request.form.get("price"),
-    depature_time = time(9, 00),
-    bus = request.form.get("bus")
+    depature_time = time(9, 00)
   )
   db.session.add(new_route)
   db.session.commit()
@@ -145,17 +146,15 @@ def available_bus():
   if request.method == "POST":
     pickup = request.form.get("from").capitalize()
     destination = request.form.get("to").capitalize()
-    available_buses = []
-    routes = Routes.query.filter_by(route_from=pickup, route_to=destination).all()
-    if routes:
-      for route in routes:
-        available_buses.append(route.bus)
-      buses = Bus.query.all()
+    route = Routes.query.filter_by(route_from=pickup, route_to=destination).first()
+    if route:
+      buses = Bus.query.filter_by(route=route.id).all()
       if len(buses) == 1:
-        flash(f"{len(available_buses)} bus found from {pickup} to {destination}", category="success")
+        flash(f"{len(buses)} bus found from {pickup} to {destination}", category="success")
       else:
-        flash(f"{len(available_buses)} buses found from {pickup} to {destination}", category="success")
-      return render_template("buses.html", routes=routes, available_buses=available_buses, buses=buses)
+        flash(f"{len(buses)} buses found from {pickup} to {destination}", category="success")
+
+      return render_template("buses.html", route=route, buses=buses)
     else:
       flash(f"No buses found from {pickup} to {destination}", category="danger")
   else:
@@ -168,8 +167,8 @@ def available_bus():
 def select_bus(bus_id):
   bus = Bus.query.get(bus_id)
   driver = Drivers.query.filter_by(id=bus.driver).first()
-  route = Routes.query.filter_by(bus=bus.id).first()
-  bookings = Booking.query.all()
+  route = Routes.query.filter_by(id=bus.route).first()
+  bookings = Booking.query.filter_by(bus=bus.id).all()
   booked_seats = []
   if request.method == "POST":
     for booking in bookings:
@@ -179,18 +178,40 @@ def select_bus(bus_id):
       flash("This seat has been already booked", category="danger")
       return redirect(url_for('select_bus', bus_id=bus.id))
     else:
-      new_booking = Booking(
-        customer = current_user.id,
-        bus = bus.id,
-        route = route.id,
-        seat = booked_seat
-      )
-      db.session.add(new_booking)
-      db.session.commit()
-      flash("Your booking has been confirmed", category="success")
-      return redirect(url_for('index'))
+      total = [route.price]
+      try:
+        checkout_session = stripe.checkout.Session.create(
+          line_items = [
+            {
+              'price_data': {
+                'currency': 'KES',
+                'product_data': {
+                  'name': 'Medical Bill',
+                },
+                'unit_amount': (sum(total)*100),
+              },
+              'quantity': 1,
+            }
+          ],
+          mode='payment',
+          success_url=request.host_url + 'home',
+          cancel_url=request.host_url + 'payment-failed',
+        )
+        new_booking = Booking(
+          customer = current_user.id,
+          bus = bus.id,
+          route = route.id,
+          seat = booked_seat
+        )
+        db.session.add(new_booking)
+        db.session.commit()
+        flash("Your booking has been confirmed", category="success")
+        return redirect(checkout_session.url)
+      except:
+        flash(f"Failed to initialize connection to the stripe server", category="warning")
+        return redirect(url_for('select_bus', bus_id=bus.id))
 
-  return render_template("bus-details.html", bus=bus, driver=driver)
+  return render_template("bus-details.html", bus=bus, driver=driver, route=route)
 
 @app.route("/my-bookings")
 @login_required
@@ -201,6 +222,17 @@ def my_bookings():
   driver = Drivers.query.all()
 
   return render_template("bookings.html", bookings=bookings, buses=buses, routes=routes, driver=driver)
+
+@app.route("/my-bookings-admin")
+@login_required
+def my_bookings_admin():
+  bookings = Booking.query.all()
+  customers = Customers.query.all()
+  buses = Bus.query.all()
+  routes = Routes.query.all()
+  driver = Drivers.query.all()
+
+  return render_template("admin_bookings.html", bookings=bookings, buses=buses, routes=routes, driver=driver, customers=customers)
 
 @app.route("/logout")
 @login_required

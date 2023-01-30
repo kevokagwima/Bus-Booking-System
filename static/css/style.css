@@ -1,7 +1,72 @@
 .container {
   margin-top: 4rem;
+  min-height: 91.8vh;
+  max-height: 91.8vh;
+  overflow: hidden;
+  background-image: url(../Images/nairobi.jpg);
+  background-size: cover;
+}
+
+.fade {
+  padding: 5rem 2rem 2rem;
+  background-color: rgb(0, 0, 0, 1);
+  min-height: 91.8vh;
+  color: white;
+  text-align: center;
+}
+
+.fade h1 {
+  color: var(--highlight-bgcolor);
+  font-size: 10ch;
+  margin-bottom: 0.2rem;
+}
+
+.fade h4 {
+  font-family: var(--header-font);
+  font-size: 7ch;
+  margin-bottom: 2rem;
+}
+
+.fade p {
+  font-size: 2.8ch;
+  color: rgb(208, 208, 208);
+  max-width: 50rem;
+  margin: 0 auto;
+}
+
+.route-box {
+  background-color: var(--highlight-bgcolor);
+  border-radius: 30rem;
+  margin: 3rem 0;
+  padding: 2rem 0 100rem;
+}
+
+.route-box form {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
+}
+
+form input {
+  border: none;
+  padding: 1em;
+  font-family: var(--paragraph-font);
+  font-size: 2.2ch;
+  outline: 2px solid grey;
+  border-radius: 0.2rem;
+  text-transform: capitalize;
+}
+
+form button {
+  background-color: rgb(0, 171, 0);
+  border: none;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  font-family: var(--special-font);
+  font-size: 2.2ch;
+  cursor: pointer;
+  color: var(--main-bgcolor);
+  border-radius: 0.2rem;
 }

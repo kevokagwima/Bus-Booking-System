@@ -16,25 +16,25 @@ def bus():
   routes = open("routes.csv")
   reader = csv.reader(bus)
   readers = csv.reader(routes)
-  for identifier,seats,driver in reader:
+  for route_from,to,price in readers:
+    new_route = Routes(
+      route_from = route_from,
+      route_to = to,
+      depature_time = time(9, 00),
+      price = price
+    )
+    db.session.add(new_route)
+    db.session.commit()
+  for identifier,seats,driver,route in reader:
     new_bus = Bus(
       reg_no = random.randint(100000,999999),
       bus_identifier = identifier,
       seats = seats,
-      driver = driver
+      driver = driver,
+      route = route
     )
     db.session.add(new_bus)
     db.session.commit()
-    for route_from,to,price in readers:
-      new_route = Routes(
-        route_from = route_from,
-        route_to = to,
-        depature_time = time(9, 00),
-        bus = new_bus.id,
-        price = price
-      )
-      db.session.add(new_route)
-      db.session.commit()
 
 def add_fleet_manager():
   fleet_manager = Fleet_Managers(
@@ -49,15 +49,15 @@ def add_fleet_manager():
 def driver():
   driver = Drivers(
     username="Driver1",
-    password="fleet1",
+    password="driver1",
   )
   db.session.add(driver)
   db.session.commit()
-  print("Driver manager addedd")
+  print("Driver addedd")
 
 if __name__ == '__main__':
   with app.app_context():
-    # main()
+    main()
     # bus()
-    add_fleet_manager()
+    # add_fleet_manager()
     # driver()

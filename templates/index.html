@@ -11,12 +11,18 @@ Home
 
 {% block body %}
 <div class="container">
-  <div class="route-box">
-    <form action="{{ url_for('available_bus') }}" method="post">
-      <input type="text" name="from" placeholder="From" required>
-      <input type="text" name="to" placeholder="To" required>
-      <button type="submit">Search</button>
-    </form>
+  <div class="fade">
+    <h1>Want to travel?</h1>
+    <h4>We got you</h4>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga deleniti quidem optio at vero cumque praesentium,
+      aut vitae quos. Debitis iure sunt consequatur reprehenderit inventore.</p>
+    <div class="route-box">
+      <form action="{{ url_for('available_bus') }}" method="post">
+        <input type="text" name="from" placeholder="From" required>
+        <input type="text" name="to" placeholder="To" required>
+        <button type="submit">Search</button>
+      </form>
+    </div>
   </div>
 </div>
 {% endblock %}

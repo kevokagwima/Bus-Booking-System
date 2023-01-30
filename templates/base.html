@@ -25,12 +25,22 @@
   {% endif %}
   {% endwith %}
   <header>
+    {% if current_user.username %}
+    <a href="{{ url_for('fleet_home') }}">
+      <h1 id="logo">EBS</h1>
+    </a>
+    {% else %}
     <a href="{{ url_for('index') }}">
       <h1 id="logo">EBS</h1>
     </a>
+    {% endif %}
     <div class="links">
       {% if current_user.is_authenticated %}
+      {% if current_user.username %}
+      <a href="{{ url_for('my_bookings_admin') }}">Bookings</a>
+      {% else %}
       <a href="{{ url_for('my_bookings') }}">My Bookings</a>
+      {% endif %}
       <p>Welcome,
         <b>
           {% if current_user.username %}
