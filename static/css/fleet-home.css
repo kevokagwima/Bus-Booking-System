@@ -2,12 +2,12 @@
   margin-top: 4rem;
   padding: 2rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1rem;
 }
 
 #tab {
-  outline: 1px solid red;
+  background-color: var(--highlight-bgcolor);
   padding: 1rem;
   margin-bottom: 1rem;
   height: max-content;
@@ -21,11 +21,13 @@
 }
 
 .btn {
-  background-color: tomato;
+  background-color: green;
   border: none;
   padding: 0.6em 1em;
   cursor: pointer;
   color: white;
+  border-radius: 0.3rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 #tab hr {
@@ -42,13 +44,14 @@
   gap: 0.5rem;
   max-height: 30rem;
   overflow: auto;
-  padding-right: 0.3rem;
+  padding: 0.3rem;
 }
 
 .bus-info,
 .routes-info,
 .driver-info {
-  background-color: whitesmoke;
+  background-color: aliceblue;
+  border-radius: 0.5rem;
   padding: 1rem;
 }
 
@@ -56,6 +59,11 @@
 .routes-info p,
 .driver-info p {
   padding: 0.2rem 0;
+  text-transform: capitalize;
+}
+
+#par {
+  text-transform: uppercase;
 }
 
 .modal,
@@ -78,7 +86,7 @@
   margin: 10% auto;
   padding: 2rem;
   border: 1px solid #888;
-  width: 80%;
+  width: 40%;
   position: relative;
 }
 
@@ -93,10 +101,13 @@ form input,
 form select {
   padding: 1em;
   cursor: pointer;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 form button {
-  background-color: green;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  background-color: var(--highlight-bgcolor);
+  border: none;
   color: white;
   padding: 1em;
   cursor: pointer;

@@ -88,8 +88,9 @@ def fleet_home():
   buses = Bus.query.all()
   drivers = Drivers.query.all()
   routes = Routes.query.all()
+  customers = Customers.query.all()
 
-  return render_template("fleet-home.html", buses=buses, drivers=drivers, routes=routes)
+  return render_template("fleet-home.html", buses=buses, drivers=drivers, routes=routes, customers=customers)
 
 @app.route("/add-bus", methods=["POST", "GET"])
 @login_required

@@ -22,7 +22,7 @@ Home
       <div class="bus-info">
         <h4>#{{ bus.reg_no }}</h4>
         <hr>
-        <p>Bus: {{ bus.bus_identifier }}</p>
+        <p id="par">Bus: {{ bus.bus_identifier }}</p>
         <p>{{ bus.seats }} seats</p>
         {% if bus.driver %}
         {% for driver in drivers if driver.id == bus.driver %}
@@ -48,6 +48,21 @@ Home
         <hr>
         <p>Price: {{ "Ksh {:,}".format(route.price) }}</p>
         <p>Leaves at: {{ route.depature_time.strftime("%I:%M %p") }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  <div id="tab" class="customer">
+    <h1>
+      Customers ({{ customers|count }})
+    </h1>
+    <hr>
+    <div class="driver-box">
+      {% for customer in customers|sort(attribute="id", reverse=True) %}
+      <div class="driver-info">
+        <p>{{ customer.fname }} {{ customer.lname }}</p>
+        <p>{{ customer.phone_number }}</p>
+        <p>Total Bookings: <b>{{ customer.booking|count }}</b></p>
       </div>
       {% endfor %}
     </div>

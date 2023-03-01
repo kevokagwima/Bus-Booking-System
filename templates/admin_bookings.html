@@ -16,7 +16,7 @@ My Bookings
     {% for booking in bookings|sort(attribute="id", reverse=True) %}
     <div class="bookings">
       {% for customer in customers if customer.id == booking.customer %}
-      <p>Booked By: {{ customer.fname }} {{ customer.lname }}</p>
+      <p id="by">Booked By: {{ customer.fname }} {{ customer.lname }}</p>
       {% endfor %}
       {% for bus in buses if bus.id == booking.bus %}
       <h4>Bus RegNo: #{{ bus.reg_no }}</h4>
